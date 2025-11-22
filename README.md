@@ -22,31 +22,31 @@ O sistema aceita ou rejeita sentenças conforme a gramática e mostra o traço c
 
 ## Gramática Utilizada (LL(1))
 
-S → a A b | b B | c C d
-A → a C | ε
-B → a D c | b A
-C → a B | d A
-D → c S
+S → a A b | b B | c C d<br>
+A → a C | ε<br>
+B → a D c | b A<br>
+C → a B | d A<br>
+D → c S<br>
 
 ------------------------------------------------
 
 ## FIRST
 
-FIRST(S) = { a, b, c }
-FIRST(A) = { a, ε }
-FIRST(B) = { a, b }
-FIRST(C) = { a, d }
-FIRST(D) = { c }
+FIRST(S) = { a, b, c }<br>
+FIRST(A) = { a, ε }<br>
+FIRST(B) = { a, b }<br>
+FIRST(C) = { a, d }<br>
+FIRST(D) = { c }<br>
 
 ------------------------------------------------
 
 ## FOLLOW
 
-FOLLOW(S) = { $, c }
-FOLLOW(A) = { $, b, c, d }
-FOLLOW(B) = { $, b, c, d }
-FOLLOW(C) = { $, b, c, d }
-FOLLOW(D) = { c }
+FOLLOW(S) = { $, c }<br>
+FOLLOW(A) = { $, b, c, d }<br>
+FOLLOW(B) = { $, b, c, d }<br>
+FOLLOW(C) = { $, b, c, d }<br>
+FOLLOW(D) = { c }<br>
 
 ------------------------------------------------
 
@@ -71,12 +71,12 @@ O sistema funciona offline, diretamente no navegador.
 
 ## Estrutura do Projeto
 
-/raiz
-├── index.html
-├── css/
-│ └── style.css
-├── js/
-│ └── script.js
+/raiz<br>
+├── index.html<br>
+├── css/<br>
+│ └── style.css<br>
+├── js/<br>
+│ └── script.js<br>
 
 ------------------------------------------------
 
