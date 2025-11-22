@@ -1,196 +1,108 @@
-# 🧠 Autômato de Pilha -- Analisador Sintático LL(1)
+# Autômato de Pilha – Analisador Sintático LL(1)
 
-Interface interativa desenvolvida para o Trabalho Discente Efetivo (TDE)
-da disciplina de **Compiladores**, URI Erechim, implementando um
-**Analisador Sintático Top-Down Preditivo Tabular (LL(1))** com geração
-interativa de sentenças, validação e traço completo da pilha.
+Este projeto faz parte do Trabalho Discente Efetivo (TDE) da disciplina de Compiladores da URI Erechim.  
+O objetivo é implementar um analisador sintático LL(1) usando um autômato de pilha top-down preditivo tabular, seguindo os requisitos definidos pelo professor.
 
-::: {align="center"}
-### 🔸 Tema visual: **Black & Gold Premium UI**
+A interface permite testar sentenças manualmente e também gerar sentenças interativamente pela tabela LL(1). Todo o processo da pilha é mostrado passo a passo.
 
-### 🔸 Desenvolvido por **João Rossetto --- 2025**
-:::
+------------------------------------------------
 
-------------------------------------------------------------------------
+## Sobre o Projeto
 
-# 🚀 Demonstração
+O analisador foi desenvolvido com HTML, CSS e JavaScript. Ele utiliza:
 
-::: {align="center"}
-`<img src="https://i.imgur.com/Q6lx5rS.png" width="850">`{=html}
-:::
+- Gramática LL(1) fatorada e sem recursão à esquerda  
+- Conjuntos FIRST e FOLLOW  
+- Tabela de Parsing  
+- Pilha top-down não recursiva  
 
-> Interface moderna com foco em legibilidade e usabilidade, incluindo
-> modo interativo via tabela LL(1), execução passo a passo e análise
-> completa da pilha.
+O sistema aceita ou rejeita sentenças conforme a gramática e mostra o traço completo da execução.
 
-------------------------------------------------------------------------
+------------------------------------------------
 
-# 📌 Sobre o Projeto
+## Gramática Utilizada (LL(1))
 
-Este trabalho implementa um **Autômato de Pilha LL(1)** baseado em:
+S → a A b | b B | c C d
+A → a C | ε
+B → a D c | b A
+C → a B | d A
+D → c S
 
--   Gramática Livre de Contexto fatorada, não ambígua e sem recursão à
-    esquerda
--   FIRST e FOLLOW calculados e organizados
--   Tabela de Parsing LL(1) construída manualmente
--   Pilha top-down preditiva não recursiva
--   Reconhecimento de sentenças corretas e rejeição automática das
-    inválidas
+------------------------------------------------
 
-O sistema permite:
+## FIRST
 
-✔ Entrada manual de sentenças\
-✔ Geração de sentenças pela tabela LL(1)\
-✔ Status dinâmico da sentença (parcial / válida / inválida)\
-✔ Execução passo a passo\
-✔ Execução completa automática\
-✔ Desfazer interação da sentença\
-✔ Traço completo da pilha com ações\
-✔ Resultado final (aceito / rejeitado + número de passos)
+FIRST(S) = { a, b, c }
+FIRST(A) = { a, ε }
+FIRST(B) = { a, b }
+FIRST(C) = { a, d }
+FIRST(D) = { c }
 
-------------------------------------------------------------------------
+------------------------------------------------
 
-# 📚 Gramática Utilizada (LL(1))
+## FOLLOW
 
-    S → a A b | b B | c C d  
-    A → a C | ε  
-    B → a D c | b A  
-    C → a B | d A  
-    D → c S
+FOLLOW(S) = { $, c }
+FOLLOW(A) = { $, b, c, d }
+FOLLOW(B) = { $, b, c, d }
+FOLLOW(C) = { $, b, c, d }
+FOLLOW(D) = { c }
 
-✔ 5 regras\
-✔ Uma delas possui 3 produções\
-✔ Pelo menos 3 regras têm 2+ produções\
-✔ Uma delas possui ε\
-✔ Não há produções do tipo A → a\
-✔ Fatorada, sem recursão à esquerda\
-✔ LL(1) válida
+------------------------------------------------
 
-------------------------------------------------------------------------
+## Tabela de Parsing LL(1)
 
-# 🔎 FIRST e FOLLOW
+| NT | a     | b   | c     | d    | $   |
+|----|-------|-----|-------|------|-----|
+| S  | a A b | b B | c C d | —    | —   |
+| A  | a C   | ε   | ε     | ε    | ε   |
+| B  | a D c | b A | —     | —    | —   |
+| C  | a B   | —   | —     | d A  | —   |
+| D  | —     | —   | c S   | —    | —   |
 
-### FIRST
+------------------------------------------------
 
-    FIRST(S) = { a, b, c }
-    FIRST(A) = { a, ε }
-    FIRST(B) = { a, b }
-    FIRST(C) = { a, d }
-    FIRST(D) = { c }
+## Como executar
 
-### FOLLOW
+Basta abrir o arquivo: index.html
+O sistema funciona offline, diretamente no navegador.
 
-    FOLLOW(S) = { $, c }
-    FOLLOW(A) = { $, b, c, d }
-    FOLLOW(B) = { $, b, c, d }
-    FOLLOW(C) = { $, b, c, d }
-    FOLLOW(D) = { c }
+------------------------------------------------
 
-------------------------------------------------------------------------
+## Estrutura do Projeto
 
-# 🧩 Tabela de Parsing LL(1)
+/raiz
+├── index.html
+├── css/
+│ └── style.css
+├── js/
+│ └── script.js
 
-          a        b        c        d        $
-    S   a A b     b B    c C d      —        —
-    A   a C       ε        ε        ε        ε
-    B   a D c    b A       —        —        —
-    C   a B       —        —       d A       —
-    D    —        —       c S       —        —
+------------------------------------------------
 
-------------------------------------------------------------------------
+## Funcionamento do Analisador
 
-# 🛠️ Como executar
+1. A pilha inicia com `S` e `$`.  
+2. O analisador lê o símbolo atual da entrada.  
+3. Se o topo da pilha é terminal, compara com a entrada.  
+4. Se for não-terminal, consulta a tabela LL(1) e aplica a produção.  
+5. Aceita quando pilha e entrada chegam em `$` ao mesmo tempo.
 
-Basta abrir o arquivo:
+Durante o processo, a tela mostra:
+- Pilha  
+- Entrada  
+- Ação aplicada  
+- Número do passo  
 
-    index.html
+------------------------------------------------
 
-O sistema funciona totalmente **offline**, sem depender de servidor.
+## Autor
 
-------------------------------------------------------------------------
+João Rossetto  
+Aluno de Ciência da Computação – URI Erechim
 
-# 📁 Estrutura do Projeto
+------------------------------------------------
 
-    📦 raiz
-     ├── index.html        # Interface principal
-     ├── css/
-     │    └── style.css    # Tema Black & Gold
-     ├── js/
-     │    └── script.js    # Lógica do analisador LL(1)
-     └── assets/ (opcional para prints)
+## Observação
 
-------------------------------------------------------------------------
-
-# 🎨 Destaques do Front-end
-
--   Layout organizado em duas colunas
--   Efeitos premium (glass, glow, hover, animações)
--   Responsividade ajustada
--   Feedback visual imediato
--   Paleta Gold & Black sofisticada
-
-------------------------------------------------------------------------
-
-# 🧪 Funcionamento Interno
-
-O analisador segue o algoritmo padrão LL(1):
-
-1.  Inicializa a pilha com `S` e `$`
-2.  Lê o próximo símbolo da entrada (`lookahead`)
-3.  Se topo da pilha é terminal:
-    -   Caso igual ao lookahead → consome
-    -   Caso contrário → erro
-4.  Se topo é não-terminal:
-    -   Consulta tabela LL(1)
-    -   Aplica produção (ou erro)
-5.  Aceita ao encontrar `S → ... → $` simultaneamente com a entrada
-
-A interface registra cada passo na tabela:
-
--   Estado da pilha
--   Entrada restante
--   Ação aplicada
--   Número do passo
-
-------------------------------------------------------------------------
-
-# 🏁 Resultado Final
-
-O sistema indica:
-
--   ✔ **"Aceito em X passos."**\
--   ❌ **"Erro em X passos."**
-
-E permite continuar testando sentenças sem recarregar a página.
-
-------------------------------------------------------------------------
-
-# 📎 Requisitos do TDE Atendidos
-
-  Requisito                 Atendido
-  ------------------------- ----------
-  GLC LL(1) válida          ✔
-  FIRST / FOLLOW            ✔
-  Tabela LL(1)              ✔
-  Pilha top-down tabular    ✔
-  Entrada manual            ✔
-  Geração de sentenças      ✔
-  Traço completo da pilha   ✔
-  Resultado final           ✔
-  Usabilidade e layout      ✔
-  Execução no navegador     ✔
-
-------------------------------------------------------------------------
-
-# 👨‍💻 Autor
-
-**João Rossetto**\
-Estudante de Ciência da Computação -- URI Erechim\
-Desenvolvimento Web • Compiladores • IA • Sistemas
-
-------------------------------------------------------------------------
-
-# 📄 Licença
-
-Este projeto foi desenvolvido exclusivamente para fins acadêmicos na
-disciplina de **Compiladores -- Prof. Fabio Zanin**.
+Projeto desenvolvido exclusivamente para fins acadêmicos na disciplina de Compiladores (Prof. Fabio Zanin).
