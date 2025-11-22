@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autômato de Pilha</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header class="header-principal">
+      <h1>AUTÔMATO DE PILHA</h1>
+    </header>
+
+    <main class="container">
+      <!-- Coluna esquerda: gramática, FIRST, FOLLOW e tabela LL(1) -->
+      <section class="coluna-esquerda">
+        <article class="bloco" id="blocoGramatica">
+          <h3>Gramática Utilizada</h3>
+          <div class="regras-container" id="listaGramatica"></div>
+        </article>
+
+        <div class="linha-dupla">
+          <article class="bloco">
+            <h3>FIRST</h3>
+            <div class="regras-container" id="listaFirst"></div>
+          </article>
+
+          <article class="bloco">
+            <h3>FOLLOW</h3>
+            <div class="regras-container" id="listaFollow"></div>
+          </article>
+        </div>
+
+        <article class="bloco">
+          <h3>Tabela de Parsing LL(1)</h3>
+          <table id="tabelaLL1" class="tg">
+            <thead>
+              <tr>
+                <th>NT</th>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>$</th>
+              </tr>
+            </thead>
+            <tbody id="corpoLL1"></tbody>
+          </table>
+        </article>
+      </section>
+
+      <!-- Coluna direita: entrada, derivação interativa e traço da pilha -->
+      <section class="coluna-direita">
+        <div class="top-bar">
+          <input
+            id="entradaUsuario"
+            type="text"
+            class="inputText"
+            placeholder="Digite a sentença (ex: a a d b)"
+          />
+          <button class="btn" id="btnLimpar">Limpar</button>
+          <button class="btn" id="btnPasso">Próximo passo</button>
+          <button class="btn" id="btnExecutar">Executar tudo</button>
+        </div>
+
+        <p class="sentenca-label">
+          Sentença gerada pela tabela:
+          <span id="sentencaGerada">—</span>
+        </p>
+
+        <div class="sentenca-status-bar">
+          <p class="sentenca-status-label">
+            Status da sentença:
+            <span id="statusSentenca">Nenhuma derivação realizada.</span>
+          </p>
+          <button class="btn-secundario" id="btnDesfazer">
+            Desfazer último passo
+          </button>
+        </div>
+
+        <div class="interacoes">
+          <table id="tabelaProcesso" class="tg">
+            <thead>
+              <tr>
+                <th>Pilha</th>
+                <th>Entrada</th>
+                <th>Ação</th>
+                <th>Passo</th>
+              </tr>
+            </thead>
+            <tbody id="corpoProcesso"></tbody>
+          </table>
+        </div>
+
+        <div class="resultado">
+          <h3>Resultado da Análise:</h3>
+          <p id="saidaResultado">Nenhuma análise realizada.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-principal">
+      <p>© URI 2025 – Autômato de Pilha | Desenvolvido por João Rossetto</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
